@@ -1,0 +1,20 @@
+services:
+  proxy:
+    image: "traefik:2.11"
+    ports:
+      - "80:80"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - "enchentes-app-br"
+    command:
+      - "--api.insecure=true"
+      - "--entrypoints.http.address=:80"
+      - "--log.level=INFO"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network=enchentes-app-br"
+
+networks:
+  enchentes-app-br:
+    name: "enchentes-app-br"
