@@ -1,6 +1,10 @@
 services:
   proxy:
     image: "traefik:2.11"
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.traefik.rule: "Host(`${TRAEFIK_HOSTNAME:-localhost}`)"
+      traefik.http.services.traefik.loadbalancer.server.port: "8080"
     ports:
       - "80:80"
     volumes:

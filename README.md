@@ -1,6 +1,6 @@
 # proxy
 
-Proxy
+Proxy <http://localhost>
 
 ## Desenvolvimento
 
