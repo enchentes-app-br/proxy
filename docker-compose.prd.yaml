@@ -2,18 +2,31 @@ services:
   proxy:
     image: "traefik:2.11"
     ports:
+      - "80:80"
       - "443:443"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "/etc/letsencrypt:/etc/letsencrypt:ro"
+      - "proxy-data:/var/lib/traefik/data"
     networks:
       - "enchentes-app-br"
     command:
       - "--log.level=INFO"
-      - "--entrypoints.websecure.address=:443"
-      - "--entrypoints.websecure.http.tls=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--providers.docker.network=enchentes-app-br"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.websecure.http.tls=true"
+      - "--entrypoints.websecure.http.tls.certresolver=default"
+      - "--certificatesresolvers.default.acme.email=wandersonwhcr@gmail.com"
+      - "--certificatesresolvers.default.acme.storage=/var/lib/traefik/data/acme.json"
+      - "--certificatesresolvers.default.acme.tlschallenge=true"
+
+volumes:
+  proxy-data:
 
 networks:
   enchentes-app-br:
