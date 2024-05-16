@@ -6,7 +6,6 @@ services:
       - "443:443"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "/etc/letsencrypt:/etc/letsencrypt:ro"
       - "proxy-data:/var/lib/traefik/data"
     networks:
       - "enchentes-app-br"
