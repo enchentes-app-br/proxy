@@ -23,6 +23,7 @@ services:
       - "--certificatesresolvers.default.acme.email=wandersonwhcr@gmail.com"
       - "--certificatesresolvers.default.acme.storage=/var/lib/traefik/data/acme.json"
       - "--certificatesresolvers.default.acme.tlschallenge=true"
+    restart: "always"
 
 volumes:
   proxy-data:
